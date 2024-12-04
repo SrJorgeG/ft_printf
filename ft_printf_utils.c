@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:13:04 by jorge             #+#    #+#             */
-/*   Updated: 2024/12/04 16:53:49 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2024/12/04 22:46:25 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,27 @@ void	ft_putu_pf(unsigned int n, int *counter)
 }
 
 // • %p El puntero void * dado como argumento se imprime en formato hexadecimal.
+
+void	ft_putptr(void *ptr, int *counter)
+{
+	unsigned long p;
+
+	p = (unsigned long)ptr;
+	if (!ptr)
+		return (ft_putstr_pf(("(nil)"), counter));
+	ft_putstr_pf("0x", counter);
+	ft_puthex_pf(p, counter, 'x');
+}
+
 // • %x Imprime un número hexadecimal (base 16) en minúsculas.
 // • %X Imprime un número hexadecimal (base 16) en mayúsculas.
 
-void	ft_puthex_pf(int n, int *counter, const char base)
+void	ft_puthex_pf(unsigned long n, int *counter, const char base)
 {
-	char	*aux;
 	char	*bs;
 
 	bs = "0123456789ABCDEF";
-	if (base == 'p')
-		ft_putstr_pf("0x", counter);
-	else if (base == 'x')
+	if (base == 'x')
 		bs = "0123456789abcdef";
 	while (n >= 16)
 	{	

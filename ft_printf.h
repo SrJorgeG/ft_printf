@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 15:16:48 by jgomez-d          #+#    #+#             */
-/*   Updated: 2024/12/04 15:24:20 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2024/12/04 22:35:28 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_putchar_pf(char c, int *counter);
 void	ft_putstr_pf(char *str, int *counter);
 void	ft_putnbr_pf(int n, int *counter);
 void	ft_putu_pf(unsigned int n, int *counter);
-void	ft_puthex_pf(int n, int *counter, const char base);
+void	ft_puthex_pf(unsigned long n, int *counter, const char base);
+void	ft_putptr(void *ptr, int *counter);
 
 #endif
