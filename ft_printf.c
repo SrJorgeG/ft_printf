@@ -6,26 +6,30 @@
 /*   By: jgomez-d <jgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:15:38 by jorge             #+#    #+#             */
-/*   Updated: 2024/12/04 22:47:34 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2024/12/07 02:58:26 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_print_pf(char *fmt, int *counter, va_list arglst)
+int	ft_print_pf(char *fmt, va_list arglst)
 {
+	int counter;
+
+	counter = 0;
 	if (*fmt == 'c' || *fmt == '%')
-		ft_putchar_pf(va_arg(arglst, int), counter);
+		counter += ft_putchar_pf(va_arg(arglst, int));
 	else if (*fmt == 's')
-		ft_putstr_pf(va_arg(arglst, char *), counter);
+		counter += ft_putstr_pf(va_arg(arglst, char *));
 	else if (*fmt == 'i' || *fmt == 'd')
-		ft_putnbr_pf(va_arg(arglst, int), counter);
+		counter += ft_putnbr_pf(va_arg(arglst, int), 0);
 	else if (*fmt == 'u')
-		ft_putu_pf(va_arg(arglst, unsigned int), counter);
+		counter += ft_putu_pf(va_arg(arglst, unsigned int), 0);
 	else if (*fmt == 'x' || *fmt == 'X')
-		ft_puthex_pf(va_arg(arglst, unsigned long), counter, *fmt);
+		counter += ft_puthex_pf(va_arg(arglst, unsigned long), 0, *fmt);
 	else if (*fmt == 'p')
-		ft_putptr(va_arg(arglst, void *), counter);
+		counter += ft_putptr(va_arg(arglst, void *));
+	return (counter);
 }
 
 int	ft_printf(const char *format, ...)
@@ -33,25 +37,36 @@ int	ft_printf(const char *format, ...)
 	va_list	arglst;
 	int		counter;
 	char	*fmt;
+	int		i;
 
+	i = 0;
 	fmt = (counter = 0, (char *)format);
-	fmt--;
 	va_start(arglst, format);
-	while (*(++fmt))
- 		if (*fmt++ != '%')
-			ft_putchar_pf(*fmt, &counter);
+	while (fmt[i])
+	{
+ 		if (fmt[i] != '%')
+			counter += ft_putchar_pf(fmt[i++]);
 		else 
-			ft_print_pf(fmt, &counter, arglst);
+		{
+			counter += ft_print_pf(&fmt[(++i)], arglst);
+			i++;
+		}
+	}
 	return (va_end(arglst), counter);
 }
 
 int main()
 {
-	int i = 42, j = 0;
+	int j = 0, k = 0;
+	unsigned int i = 42;
 	char *s;
 
 	s = "Hola Mundo";
-	j = ft_printf("%s  %d  %p", s, i, &i);
-	printf("\n %d \n", j);
+	//j = ft_printf("[%p]\n", s);
+	j = ft_printf("[%c] [%p] [%u]\n", 'k', s, i);
+	k = printf("[%c] [%p] [%u]\n",  'k', s, i);
+	// k = printf("[%p]\n", s);
+	printf("\n %d : %d \n", j, k);
+
 	return 0;
 }
