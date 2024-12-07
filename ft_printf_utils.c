@@ -6,7 +6,7 @@
 /*   By: jgomez-d <jgomez-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:13:04 by jorge             #+#    #+#             */
-/*   Updated: 2024/12/07 03:13:50 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2024/12/07 05:39:55 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,12 @@ int ft_putnbr_pf(int n, int counter)
 		n = -n;
 	}
 	if (n >= 10)
-		ft_putnbr_pf(n / 10, counter);
-	counter += ft_putchar_pf((n % 10) + '0');
+	{	
+		counter = ft_putu_pf(n / 10, counter + 1);
+		ft_putchar_pf(n % 10 + '0');
+		return (counter);
+	}
+	counter += ft_putchar_pf(n % 10 + '0');
 	return (counter);
 }
 
