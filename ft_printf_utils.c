@@ -3,29 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgomez-d <jgomez-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:13:04 by jorge             #+#    #+#             */
-/*   Updated: 2024/12/07 05:39:55 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2024/12/09 08:21:25 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-// • %c Imprime un solo carácter.
-// • % % para imprimir el símbolo del porcentaje.
-
-int	ft_putchar_pf(char c)
-{
-	return (write(1, &c, 1));
-}
 
 // • %s Imprime una string (como se define por defecto en C).
 
 int	ft_putstr_pf(char *str )
 {
 	int	i;
-	int counter;
+	int	counter;
 
 	i = -1;
 	counter = 0;
@@ -39,20 +31,20 @@ int	ft_putstr_pf(char *str )
 // • %d Imprime un número decimal (base 10).
 // • %i Imprime un entero en base 10.
 
-int ft_putnbr_pf(int n, int counter)
+int	ft_putnbr_pf(int n, int counter)
 {
 	if (n < 0)
 	{
 		counter += ft_putchar_pf('-');
 		if (n == -2147483648)
 		{
-			counter += ft_putchar_pf('2');	
+			counter += ft_putchar_pf('2');
 			n = (-147483648);
 		}
 		n = -n;
 	}
 	if (n >= 10)
-	{	
+	{
 		counter = ft_putu_pf(n / 10, counter + 1);
 		ft_putchar_pf(n % 10 + '0');
 		return (counter);
@@ -63,10 +55,10 @@ int ft_putnbr_pf(int n, int counter)
 
 // • %u Imprime un número decimal (base 10) sin signo.
 
-int ft_putu_pf(unsigned int n, int counter)
+int	ft_putu_pf(unsigned int n, int counter)
 {
 	if (n >= 10)
-	{	
+	{
 		counter = ft_putu_pf(n / 10, counter + 1);
 		ft_putchar_pf(n % 10 + '0');
 		return (counter);
@@ -86,7 +78,7 @@ int	ft_puthex_pf(unsigned long n, int counter, const char base)
 	if (base == 'x')
 		bs = "0123456789abcdef";
 	if (n >= 16)
-	{	
+	{
 		counter = ft_puthex_pf(n / 16, counter + 1, base);
 		ft_putchar_pf(bs[n % 16]);
 		return (counter);
@@ -99,9 +91,9 @@ int	ft_puthex_pf(unsigned long n, int counter, const char base)
 
 int	ft_putptr(void *ptr)
 {
-	unsigned long p;
-	int counter;
-	
+	unsigned long	p;
+	int				counter;
+
 	counter = 0;
 	p = (unsigned long)ptr;
 	if (!ptr)

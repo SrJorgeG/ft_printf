@@ -3,18 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgomez-d <jgomez-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jgomez-d <jgomez-d@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 01:15:38 by jorge             #+#    #+#             */
-/*   Updated: 2024/12/07 05:35:38 by jgomez-d         ###   ########.fr       */
+/*   Updated: 2024/12/09 08:20:45 by jgomez-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+// • %c Imprime un solo carácter.
+// • % % para imprimir el símbolo del porcentaje.
+
+int	ft_putchar_pf(char c)
+{
+	return (write(1, &c, 1));
+}
+
 int	ft_print_pf(char *fmt, va_list arglst)
 {
-	int counter;
+	int	counter;
 
 	counter = 0;
 	if (*fmt == 'c')
@@ -42,33 +50,18 @@ int	ft_printf(const char *format, ...)
 	int		i;
 
 	i = 0;
-	fmt = (counter = 0, (char *)format);
+	counter = 0;
+	fmt = ((char *)format);
 	va_start(arglst, format);
 	while (fmt[i])
 	{
- 		if (fmt[i] != '%')
+		if (fmt[i] != '%')
 			counter += ft_putchar_pf(fmt[i++]);
-		else 
+		else
 		{
 			counter += ft_print_pf(&fmt[(++i)], arglst);
 			i++;
 		}
 	}
 	return (va_end(arglst), counter);
-}
-
-int main()
-{
-	int j = 0, k = 0;
-	unsigned int i = 42;
-	char *s;
-
-	s = "Hola Mundo";
-	//j = ft_printf("[%p]\n", s);
-	j = ft_printf("[%c] [%p] [%u]\n", 'k', s, i);
-	k = printf("[%c] [%p] [%u]\n",  'k', s, i);
-	// k = printf("[%p]\n", s);
-	printf("\n %d : %d \n", j, k);
-
-	return 0;
 }
